@@ -28,7 +28,7 @@ export class UserService {
 
   async update(
     id: number,
-    { name, email, password, birthAt }: UpdatePutUserDTO,
+    { name, email, password, birthAt, role }: UpdatePutUserDTO,
   ) {
     if (!birthAt) {
       birthAt = null;
@@ -40,6 +40,7 @@ export class UserService {
         email,
         password,
         birthAt: birthAt ? new Date(birthAt) : null,
+        role,
       },
       where: {
         id,
@@ -49,7 +50,7 @@ export class UserService {
 
   async updatePartial(
     id: number,
-    { name, email, password, birthAt }: UpdatePatchUserDTO,
+    { name, email, password, birthAt, role }: UpdatePatchUserDTO,
   ) {
     const data: any = {};
 
@@ -67,6 +68,10 @@ export class UserService {
 
     if (password) {
       data.password = password;
+    }
+
+    if (role) {
+      data.role = role;
     }
 
     this.exists(id);
